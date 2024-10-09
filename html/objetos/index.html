@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../objetos/css/style.css">
+   
+    <script defer src="js/main.js"></script>
+    <title>Enviar PDF</title>
+    <!-- Actualización del SDK de EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("f6mpwpj9-F_jwEw01"); // Reemplaza "f6mpwpj9-F_jwEw01" con tu User ID de EmailJS
+        })();
+    </script>
+</head>
+<body>
+   
+     <div class="header">
+        <nav class="navbar  navbar-expand-sm  navbar-dark">
+        <img src="./img/logopokeball.png" alt="logo de junior">
+       
+        <ul>
+          <a href="../../index.html">
+            <li>Inicio</li>
+          </a>
+          <a href="../../html/Region/index.html">
+            <li>Region</li>
+          </a>
+            <a href="../../html/Pokemos/index.html">
+            <li>Pokemons</li>
+          </a>
+          <a href="../../html/Novedades/index.html">
+            <li>Novedades</li>
+          </a>
+          <a href="../../html/cornelio/index.html">
+            <li>+ Informacion</li>
+          </a>
+          <a href="">
+            <li>Objetos</li>
+          </a>
+        </ul>
+        </nav>
+    </div>
+
+    <div>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+       
+            <a class="navbar-brand" href="#"></a>
+            
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+            </ul>
+        </nav> 
+
+    </div>
+<div>
+    <h1>Lista de Objetos Pokémon</h1>
+
+    <input type="text" id="searchInput" placeholder="Sé específico; te recomendamos usar tildes." style="width: 1500px;">
+    <button onclick="searchItem()">Buscar</button>
+
+    <div id="item-list" class="item-list"></div>
+
+    <script>
+        const pokemonItems = {
+    "items": [
+      { "id": 1, "name": "Poción", "description": "Restaurar 20 puntos de salud.", "category": "Curación", "price": 300 },
+      { "id": 2, "name": "Superpoción", "description": "Restaurar 50 puntos de salud.", "category": "Curación", "price": 500 },
+      { "id": 3, "name": "Hiperpoción", "description": "Restaurar 200 puntos de salud.", "category": "Curación", "price": 1200 },
+      { "id": 4, "name": "Restauración", "description": "Restaurar completamente a un Pokémon debilitado.", "category": "Curación", "price": 3000 },
+      { "id": 5, "name": "Elixir", "description": "Restaurar los PP de todos los ataques.", "category": "Curación", "price": 1000 },
+      { "id": 6, "name": "Antídoto", "description": "Elimina el envenenamiento de un Pokémon.", "category": "Curación", "price": 100 },
+      { "id": 7, "name": "Berrinche", "description": "Elimina los estados alterados como el parálisis.", "category": "Curación", "price": 150 },
+      { "id": 8, "name": "Revivir", "description": "Revive a un Pokémon debilitado con la mitad de su salud.", "category": "Curación", "price": 1500 },
+      { "id": 9, "name": "Revive Plus", "description": "Revive a un Pokémon debilitado con toda su salud.", "category": "Curación", "price": 2000 },
+      { "id": 10, "name": "Bálsamo", "description": "Restaurar 30 puntos de salud a un Pokémon.", "category": "Curación", "price": 500 },
+      { "id": 11, "name": "Bola Poké", "description": "Usada para capturar Pokémon salvajes.", "category": "Herramienta", "price": 200 },
+      { "id": 12, "name": "Superbola", "description": "Aumenta la probabilidad de captura de un Pokémon salvaje.", "category": "Herramienta", "price": 600 },
+      { "id": 13, "name": "Ultrabola", "description": "Alta probabilidad de captura para Pokémon difíciles.", "category": "Herramienta", "price": 1200 },
+      { "id": 14, "name": "Masterball", "description": "Captura un Pokémon con éxito garantizado.", "category": "Herramienta", "price": 10000 },
+      { "id": 15, "name": "Bola Safari", "description": "Usada en la zona safari para capturar Pokémon.", "category": "Herramienta", "price": 500 },
+      { "id": 16, "name": "Bola Curva", "description": "Aumenta la probabilidad de captura con mayor precisión.", "category": "Herramienta", "price": 400 },
+      { "id": 17, "name": "Bola Anillo", "description": "Bola especial usada para atrapar Pokémon de tipo agua.", "category": "Herramienta", "price": 700 },
+      { "id": 18, "name": "Bola de Nieve", "description": "Bola especial para Pokémon de tipo hielo.", "category": "Herramienta", "price": 800 },
+      { "id": 19, "name": "Bola de Luz", "description": "Bola especial usada en Pokémon de tipo eléctrico.", "category": "Herramienta", "price": 900 },
+      { "id": 20, "name": "Bola Cometa", "description": "Bola usada para Pokémon de tipo volador.", "category": "Herramienta", "price": 750 },
+      { "id": 21, "name": "Bola Magneto", "description": "Captura a Pokémon de tipo acero o magnético.", "category": "Herramienta", "price": 1100 },
+      { "id": 22, "name": "Bola Glaseado", "description": "Captura Pokémon de tipo hielo con un 20% más de éxito.", "category": "Herramienta", "price": 1300 },
+      { "id": 23, "name": "Bola Fruta", "description": "Bola que aumenta la captura cuando el Pokémon es de tipo planta.", "category": "Herramienta", "price": 600 },
+      { "id": 24, "name": "Restaurador", "description": "Restaura la energía de un Pokémon después de una batalla.", "category": "Curación", "price": 1500 },
+      { "id": 25, "name": "Cola Sombra", "description": "Ataque especial que inflige daño extra a los Pokémon de tipo psíquico.", "category": "Habilidad", "price": 800 },
+      { "id": 26, "name": "Hierro", "description": "Usado para aumentar la defensa de un Pokémon.", "category": "Mejora", "price": 400 },
+      { "id": 27, "name": "Roca Estrella", "description": "Aumenta la velocidad de un Pokémon en la batalla.", "category": "Mejora", "price": 1000 },
+      { "id": 28, "name": "Bala Rápida", "description": "Aumenta la velocidad de un Pokémon temporalmente.", "category": "Mejora", "price": 900 },
+      { "id": 29, "name": "Bola Prisma", "description": "Mejora las probabilidades de capturar Pokémon raros.", "category": "Herramienta", "price": 1600 },
+      { "id": 30, "name": "Piedra Fuego", "description": "Usada para evolucionar a Pokémon de tipo fuego.", "category": "Evolución", "price": 500 },
+      { "id": 31, "name": "Piedra Agua", "description": "Usada para evolucionar a Pokémon de tipo agua.", "category": "Evolución", "price": 500 },
+      { "id": 32, "name": "Piedra Trueno", "description": "Usada para evolucionar a Pokémon de tipo eléctrico.", "category": "Evolución", "price": 500 },
+      { "id": 33, "name": "Piedra Lunar", "description": "Usada para evolucionar a Pokémon de tipo hada.", "category": "Evolución", "price": 500 },
+      { "id": 34, "name": "Piedra Solar", "description": "Usada para evolucionar a Pokémon de tipo planta.", "category": "Evolución", "price": 500 },
+      { "id": 35, "name": "Piedra Noche", "description": "Usada para evolucionar a Pokémon de tipo oscuro.", "category": "Evolución", "price": 500 },
+      { "id": 36, "name": "Piedra Magma", "description": "Usada para evolucionar a Pokémon de tipo fuego.", "category": "Evolución", "price": 500 },
+      { "id": 37, "name": "Piedra Hielo", "description": "Usada para evolucionar a Pokémon de tipo hielo.", "category": "Evolución", "price": 500 },
+      { "id": 38, "name": "Piedra Relámpago", "description": "Usada para evolucionar a Pokémon de tipo eléctrico.", "category": "Evolución", "price": 500 },
+      { "id": 39, "name": "Piedra Fulgor", "description": "Usada para evolucionar a Pokémon de tipo luminoso.", "category": "Evolución", "price": 500 },
+      { "id": 40, "name": "Escudo del Guerrero", "description": "Aumenta la defensa de un Pokémon durante las batallas.", "category": "Defensa", "price": 1000 },
+      { "id": 41, "name": "Amuleto", "description": "Aumenta las posibilidades de encontrar objetos en las batallas.", "category": "Accesorio", "price": 400 },
+      { "id": 42, "name": "Dulce Acelera", "description": "Aumenta temporalmente la velocidad de un Pokémon.", "category": "Accesorio", "price": 300 },
+      { "id": 43, "name": "Dulce Salud", "description": "Aumenta temporalmente la salud de un Pokémon.", "category": "Accesorio", "price": 350 },
+      { "id": 44, "name": "Megalitico", "description": "Mejora la fuerza de un Pokémon con el uso de un megaevolución.", "category": "Evolución", "price": 1500 },
+      { "id": 45, "name": "Fragmento X", "description": "Fragmento usado para crear objetos poderosos.", "category": "Mejora", "price": 1200 },
+      { "id": 46, "name": "Fragmento Z", "description": "Fragmento usado para activar habilidades especiales.", "category": "Mejora", "price": 1300 },
+      { "id": 47, "name": "Cinta Roza", "description": "Cinta que aumenta la fuerza de los Pokémon de tipo hada.", "category": "Accesorio", "price": 300 },
+      { "id": 48, "name": "Cinta Amarilla", "description": "Cinta que aumenta la defensa de los Pokémon de tipo eléctrico.", "category": "Accesorio", "price": 300 },
+      { "id": 49, "name": "Cinta Azul", "description": "Cinta que mejora las habilidades de los Pokémon de tipo agua.", "category": "Accesorio", "price": 300 },
+      { "id": 50, "name": "Cinta Verde", "description": "Cinta que mejora las habilidades de los Pokémon de tipo planta.", "category": "Accesorio", "price": 300 },
+      { "id": 51, "name": "Cinta Morada", "description": "Cinta que mejora las habilidades de los Pokémon de tipo psíquico.", "category": "Accesorio", "price": 300 },
+      { "id": 52, "name": "Lente Espejo", "description": "Lente que permite reflejar ataques de tipo psíquico.", "category": "Accesorio", "price": 700 },
+      { "id": 53, "name": "Lente Hada", "description": "Lente que aumenta las habilidades de los Pokémon de tipo hada.", "category": "Accesorio", "price": 600 },
+      { "id": 54, "name": "Lente Fuego", "description": "Lente que aumenta la potencia de los ataques de tipo fuego.", "category": "Accesorio", "price": 800 },
+      { "id": 55, "name": "Lente Agua", "description": "Lente que aumenta las habilidades de los Pokémon de tipo agua.", "category": "Accesorio", "price": 750 },
+      { "id": 56, "name": "Lente Trueno", "description": "Lente que mejora las habilidades de los Pokémon de tipo eléctrico.", "category": "Accesorio", "price": 850 },
+      { "id": 57, "name": "Lente Planta", "description": "Lente que mejora las habilidades de los Pokémon de tipo planta.", "category": "Accesorio", "price": 700 },
+      { "id": 58, "name": "Cinturón Pesado", "description": "Aumenta la defensa, pero reduce la velocidad de los Pokémon.", "category": "Accesorio", "price": 400 },
+      { "id": 59, "name": "Cinturón Ligero", "description": "Aumenta la velocidad, pero reduce la defensa de los Pokémon.", "category": "Accesorio", "price": 350 },
+      { "id": 60, "name": "Silla de Comando", "description": "Usada en entrenadores para guiar a sus Pokémon en batalla.", "category": "Herramienta", "price": 1000 },
+      { "id": 61, "name": "Sombrero Protector", "description": "Protege de los ataques de tipo psíquico.", "category": "Accesorio", "price": 500 },
+      { "id": 62, "name": "Colgante Eléctrico", "description": "Colgante que potencia los ataques eléctricos.", "category": "Accesorio", "price": 400 },
+      { "id": 63, "name": "Cuerda Escape", "description": "Permite escapar de batallas o zonas difíciles.", "category": "Herramienta", "price": 150 },
+      { "id": 64, "name": "Polvo Estelar", "description": "Usado para activar habilidades especiales.", "category": "Mejora", "price": 800 },
+      { "id": 65, "name": "Polvo Lunar", "description": "Aumenta las habilidades de los Pokémon de tipo lunar.", "category": "Mejora", "price": 700 },
+      { "id": 66, "name": "Polvo Hielo", "description": "Usado para potenciar ataques de tipo hielo.", "category": "Mejora", "price": 600 },
+      { "id": 67, "name": "Polvo Solar", "description": "Potencia ataques de tipo planta.", "category": "Mejora", "price": 650 },
+      { "id": 68, "name": "Polvo Cometa", "description": "Usado para activar habilidades cósmicas.", "category": "Mejora", "price": 750 },
+      { "id": 69, "name": "Restaurador del Áurea", "description": "Restaura completamente la salud y PP de todos los Pokémon.", "category": "Curación", "price": 5000 },
+      { "id": 70, "name": "Balsa", "description": "Usada para transportar Pokémon a través del agua.", "category": "Herramienta", "price": 300 },
+      { "id": 71, "name": "Bola Energía", "description": "Bola que potencia los ataques de tipo energía.", "category": "Herramienta", "price": 700 },
+      { "id": 72, "name": "Encantadora", "description": "Permite mejorar las habilidades de los Pokémon en batalla.", "category": "Accesorio", "price": 900 },
+      { "id": 73, "name": "Bastón Místico", "description": "Usado por entrenadores para dirigir a Pokémon en combate.", "category": "Herramienta", "price": 800 },
+      { "id": 74, "name": "Piedra Lunar", "description": "Usada para evolucionar a Pokémon de tipo hada.", "category": "Evolución", "price": 500 },
+      { "id": 75, "name": "Bala Luminosa", "description": "Aumenta los ataques de Pokémon de tipo luz.", "category": "Accesorio", "price": 600 },
+      { "id": 76, "name": "Caramelos Raros", "description": "Sube de nivel a un Pokémon instantáneamente.", "category": "Mejora", "price": 1500 },
+      { "id": 77, "name": "Bola Disparo", "description": "Mejora la efectividad de los ataques de tipo disparo.", "category": "Herramienta", "price": 650 },
+      { "id": 78, "name": "Cinta Anillo", "description": "Cinta que mejora los ataques de Pokémon de tipo anillo.", "category": "Accesorio", "price": 500 },
+      { "id": 79, "name": "Cuerda Viaje", "description": "Permite viajar rápidamente entre ciudades.", "category": "Herramienta", "price": 300 },
+      { "id": 80, "name": "Tetra Fuerza", "description": "Aumenta la potencia de ataques de Pokémon de tipo cuadrado.", "category": "Accesorio", "price": 800 },
+      { "id": 81, "name": "Charco Fuerte", "description": "Mejora la defensa de los Pokémon de tipo agua.", "category": "Accesorio", "price": 600 },
+      { "id": 82, "name": "Piedra Sombría", "description": "Usada para evolucionar a Pokémon de tipo oscuro.", "category": "Evolución", "price": 600 },
+      { "id": 83, "name": "Restaurador Cósmico", "description": "Restaurar la salud y PP a todos los Pokémon de un equipo.", "category": "Curación", "price": 4000 },
+      { "id": 84, "name": "Gafas de Sol", "description": "Aumenta la velocidad de Pokémon de tipo sol.", "category": "Accesorio", "price": 550 },
+      { "id": 85, "name": "Antipérdida", "description": "Previene que un Pokémon pierda objetos en combate.", "category": "Accesorio", "price": 600 },
+      { "id": 86, "name": "Amuletos Dragón", "description": "Mejora las habilidades de Pokémon de tipo dragón.", "category": "Accesorio", "price": 750 },
+      { "id": 87, "name": "Joyero", "description": "Usado para guardar objetos valiosos de Pokémon.", "category": "Accesorio", "price": 300 },
+      { "id": 88, "name": "Zapatos Rápidos", "description": "Aumenta la velocidad temporalmente en combate.", "category": "Accesorio", "price": 500 },
+      { "id": 89, "name": "Piedra Relámpago", "description": "Usada para evolucionar a Pokémon de tipo eléctrico.", "category": "Evolución", "price": 600 },
+      { "id": 90, "name": "Alijo Secreto", "description": "Permite almacenar objetos importantes para el equipo.", "category": "Herramienta", "price": 400 },
+      { "id": 91, "name": "Caja Rara", "description": "Caja que contiene objetos raros y valiosos.", "category": "Herramienta", "price": 1000 },
+      { "id": 92, "name": "Manzana Dorada", "description": "Mejora el rendimiento de Pokémon de tipo dorado.", "category": "Mejora", "price": 700 },
+      { "id": 93, "name": "Aguijón Veneno", "description": "Ataque especial que potencia el veneno de los Pokémon.", "category": "Accesorio", "price": 800 },
+      { "id": 94, "name": "Hielotrón", "description": "Aumenta la resistencia a ataques de tipo hielo.", "category": "Accesorio", "price": 600 },
+      { "id": 95, "name": "Fragmento Oscuro", "description": "Objeto que mejora ataques de tipo oscuro.", "category": "Mejora", "price": 800 },
+      { "id": 96, "name": "Fuerza Cósmica", "description": "Aumenta la potencia de los ataques de tipo cósmico.", "category": "Accesorio", "price": 900 },
+      { "id": 97, "name": "Cuerda Habilidad", "description": "Mejora las habilidades especiales de Pokémon.", "category": "Mejora", "price": 700 },
+      { "id": 98, "name": "Bola Rocosa", "description": "Aumenta la defensa de los Pokémon de tipo roca.", "category": "Accesorio", "price": 600 },
+      { "id": 99, "name": "Ojo Mágico", "description": "Incrementa la precisión de los ataques de tipo mágico.", "category": "Accesorio", "price": 400 },
+      { "id": 100, "name": "Vara Misteriosa", "description": "Aumenta la fuerza de los ataques de tipo misterioso.", "category": "Accesorio", "price": 500 }
+    ]
+  }
+  ;
+
+        // Función para renderizar la lista de objetos
+        function renderItems(items) {
+            const itemList = document.getElementById("item-list");
+            itemList.innerHTML = ''; // Limpiar la lista antes de agregar los ítems
+
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('item');
+                itemDiv.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                    <p><strong>Categoría:</strong> ${item.category}</p>
+                    <p><strong>Precio:</strong> ${item.price} </p>
+                `;
+                itemList.appendChild(itemDiv);
+            });
+        }
+
+        // Mostrar todos los objetos al cargar la página
+        renderItems(pokemonItems.items);
+
+        // Función de búsqueda
+        function searchItem() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredItems = pokemonItems.items.filter(item => 
+                item.name.toLowerCase().includes(searchTerm)
+            );
+            renderItems(filteredItems); // Mostrar solo los objetos filtrados
+        }
+    </script>
+</div>
